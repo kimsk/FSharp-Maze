@@ -43,16 +43,18 @@ let rec getRandom min max (nums:int seq) =
     | _ -> getRandom min max nums
 
 let getRandomMaze:seq<int>->int = getRandom 0 (mazeSize-1)
+let printDimension maze title =
+    printfn "%s %d %d" title (maze |> Array2D.length1) (maze |> Array2D.length2)
 
 let divideMaze wallR wallC height width =    
     let topLeft = Array2D.init (wallR) (wallC) (fun r c -> Path)
     let topRight = Array2D.init (wallR) (width - wallC) (fun r c -> Path)
     let bottomLeft = Array2D.init (height - wallR - 1) (wallC) (fun r c -> Path)
     let bottomRight = Array2D.init (height - wallR - 1) (width - wallC) (fun r c -> Path)    
-    topLeft |> printfn "%A"
-    topRight |> printfn "%A"
-    bottomLeft |> printfn "%A"
-    bottomRight |> printfn "%A"
+    printDimension topLeft "topLeft"
+    printDimension topRight "topRight"
+    printDimension bottomLeft "bottomLeft"
+    printDimension bottomRight "bottomRight"
 
 let buildWall (maze:Block[,]) =
     let height = Array2D.length1 maze
